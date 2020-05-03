@@ -51,6 +51,9 @@
     <ClInclude Include="input.h">
       <Filter>Resource Files\Wrappers</Filter>
     </ClInclude>
+    <ClInclude Include="animation.h">
+      <Filter>Resource Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="audio.cpp">
@@ -79,6 +82,9 @@
     </ClCompile>
     <ClCompile Include="input.cpp">
       <Filter>Source Files\Wrappers</Filter>
+    </ClCompile>
+    <ClCompile Include="animation.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
