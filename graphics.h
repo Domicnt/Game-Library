@@ -3,6 +3,8 @@
 #include "vcpkg/installed/x86-windows/include/SDL2/SDL_image.h"
 #include "vcpkg/installed/x86-windows/include/SDL2/SDL_ttf.h"
 
+#include "camera.h"
+
 class Graphics
 {
 public:
@@ -13,5 +15,6 @@ public:
 	//rgb of the background, each is between 1 and 255
 	Uint8 r, g, b;
 
-	
+	//camera for rendering
+	Camera camera;
 };
