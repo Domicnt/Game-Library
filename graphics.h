@@ -3,6 +3,8 @@
 #include "vcpkg/installed/x86-windows/include/SDL2/SDL_image.h"
 #include "vcpkg/installed/x86-windows/include/SDL2/SDL_ttf.h"
 
+#include <string>
+
 #include "camera.h"
 
 class Graphics
@@ -17,4 +19,33 @@ public:
 
 	//camera for rendering
 	Camera camera;
+
+	//font for rendered text
+	TTF_Font* font;
+
+	//constructor, takes desired width and height of window
+	Graphics(const int& width, const int& height);
+
+	//Functions for rendering geometry:
+	
+	void drawLine(const int& x1, const int& y1, const int& x2, const int& y2) const;
+	void drawRect(const int& x1, const int& y1, const int& x2, const int& y2) const;
+	void fillRect(const int& x1, const int& y1, const int& x2, const int& y2) const;
+	void drawCircle(const int& x, const int& y, const int& r) const;
+	void fillCircle(const int& x, const int& y, const int& r) const;
+	
+	//Functions for rendering text:
+
+	void loadFont(const std::string& path, const int& size);
+	static SDL_Texture* loadTTFTexture(const std::string& text, const SDL_Color& color);
+	
+	//Functions for rendering images:
+
+	static SDL_Texture* loadTexture(const std::string& path);
+	void drawImage(const int& x, const int& y, const int& w, const int& h, SDL_Texture* texture) const;
+	void drawImageEx(const int& x, const int& y, const int& w, const int& h, SDL_Texture* texture, const double& angle, const SDL_Point& center) const;
+	void drawPartialImage(const int& textureX, const int& textureY, const int& textureW, const int& textureH, const int& x, const int& y, const int& w, const int& h, SDL_Texture* texture) const;
+
+	//Render everything to the window, and clear renderer
+	void render() const;
 };
