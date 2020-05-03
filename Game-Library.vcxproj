@@ -150,6 +150,7 @@
     <ClInclude Include="functions.h" />
     <ClInclude Include="game.h" />
     <ClInclude Include="graphics.h" />
+    <ClInclude Include="input.h" />
     <ClInclude Include="object.h" />
     <ClInclude Include="physics.h" />
   </ItemGroup>
@@ -160,6 +161,7 @@
     <ClCompile Include="functions.cpp" />
     <ClCompile Include="game.cpp" />
     <ClCompile Include="graphics.cpp" />
+    <ClCompile Include="input.cpp" />
     <ClCompile Include="object.cpp" />
     <ClCompile Include="physics.cpp" />
   </ItemGroup>

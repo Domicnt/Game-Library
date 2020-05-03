@@ -48,6 +48,9 @@
     <ClInclude Include="camera.h">
       <Filter>Resource Files</Filter>
     </ClInclude>
+    <ClInclude Include="input.h">
+      <Filter>Resource Files\Wrappers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="audio.cpp">
@@ -73,6 +76,9 @@
     </ClCompile>
     <ClCompile Include="camera.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="input.cpp">
+      <Filter>Source Files\Wrappers</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
