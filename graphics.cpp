@@ -175,7 +175,7 @@ void Graphics::drawImageEx(const int& x, const int& y, const int& w, const int& 
 	SDL_Rect dstrect = { x, y, w, h };
 	//diagonal radius of a square, to test if one would be on screen, even rotated
 	const auto d = sqrt(2) / 2;
-	if (camera.visible({ x - w * d, y - h * d }) || camera.visible({ x + w + w * d, y + h + h * d }))
+	if (camera.visible({ int(x - w * d), int(y - h * d) }) || camera.visible({ int(x + w + w * d), int(y + h + h * d) }))
 		SDL_RenderCopyEx(renderer, texture, nullptr, &dstrect, angle, &center, SDL_FLIP_NONE);
 }
 
@@ -197,7 +197,7 @@ void Graphics::drawPartialImageEx(const int& textureX, const int& textureY, cons
 	SDL_Rect dstrect = { x, y, w, h };
 	//diagonal radius of a square, to test if one would be on screen, even rotated
 	const auto d = sqrt(2) / 2;
-	if (camera.visible({ x - w * d, y - h * d }) || camera.visible({ x + w + w * d, y + h + h * d }))
+	if (camera.visible({ int(x - w * d), int(y - h * d) }) || camera.visible({ int(x + w + w * d), int(y + h + h * d) }))
 	{
 		//the rect of the place on the texture from which the image should be taken
 		SDL_Rect srcrect = { textureX, textureY, textureW, textureH };

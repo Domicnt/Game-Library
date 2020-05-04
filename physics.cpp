@@ -18,7 +18,7 @@ b2Body* Physics::createBody(const bool& dynamic, const b2Vec2& pos)
 	if (dynamic) bodyDef.type = b2_dynamicBody;
 	else bodyDef.type = b2_staticBody;
 	//set position
-	const SDL_FPoint newPos = camera->inverseProjectPoint({pos.x, pos.y});
+	const SDL_Point newPos = camera->inverseProjectPoint({ int(pos.x), int(pos.y)});
 	bodyDef.position.Set(newPos.x, newPos.y);
 	//create body
 	auto* body = world->CreateBody(&bodyDef);

@@ -6,7 +6,7 @@ class Animation
 {
 public:
 	//position
-	SDL_FPoint pos;
+	SDL_Point pos;
 	//dimensions
 	int w, h;
 

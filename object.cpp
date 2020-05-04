@@ -12,7 +12,7 @@ Object::Object(b2Body* Body)
 void Object::draw(const Graphics& sdl2)
 {
 	const auto bodyPoint = body->GetWorldCenter();
-	const auto center = sdl2.camera.projectPoint({bodyPoint.x, bodyPoint.y});
+	const auto center = sdl2.camera.projectPoint({ int(bodyPoint.x), int(bodyPoint.y)});
 	if(currentTexture != -1)
 	{
 		sdl2.drawImageEx(center.x - textureWidth / 2, center.y - textureHeight / 2, textureWidth, textureHeight, textures[currentTexture], body->GetAngle() * 180 / 3.14159, { textureWidth / 2, textureHeight / 2 });
