@@ -72,6 +72,11 @@ void Game::basicDraw(Physics& physics, Graphics& graphics)
 	}
 }
 
+bool Game::updateTime() const
+{
+	return lastUpdate + 1000 / updatesPerSecond <= Clock::checkTime();
+}
+
 void Game::update(Physics& physics, Graphics& graphics)
 {
 	//basic outline
@@ -81,7 +86,7 @@ void Game::update(Physics& physics, Graphics& graphics)
 	for (auto& i : objects)
 		i.draw(graphics);
 	//perform one physics step if it time to do so
-	if (lastUpdate + 1000 / updatesPerSecond <= Clock::checkTime()) {
+	if (updateTime()) {
 		lastUpdate += 1000 / updatesPerSecond;
 		physics.step();
 	}

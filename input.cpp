@@ -13,7 +13,7 @@ bool Input::checkKey(char key)
 	//create array of all keys' states
 	const auto keystates = SDL_GetKeyboardState(nullptr);
 	//check if the desired key is down
-	if (keystates[SDL_GetKeyFromName(&key)])
+	if (keystates[SDL_GetScancodeFromKey(SDL_GetKeyFromName(&key))])
 	{
 		return true;
 	}

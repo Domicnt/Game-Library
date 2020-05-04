@@ -29,6 +29,8 @@ public:
 
 	//basic outline for all physics bodies
 	void basicDraw(Physics& physics, Graphics& graphics);
+	//checks if it is time for an update
+	bool updateTime() const;
 	//update objects and make a physics step
 	void update(Physics& physics, Graphics& graphics);
 };

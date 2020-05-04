@@ -16,9 +16,8 @@ SDL_Point Camera::inverseProjectPoint(SDL_Point point) const
 
 void Camera::changeZoom(const float& Zoom)
 {
-	auto change = Zoom / zoom;
-	SDL_Point center = {pos.x + w * zoom, pos.y + h * zoom};
-	pos = { int(center.x - w * Zoom), int(center.y - h * Zoom) };
+	SDL_Point center = {pos.x + w / 2 * zoom, pos.y + h / 2 * zoom};
+	pos = { int(center.x - w / 2 * Zoom), int(center.y - h / 2 * Zoom) };
 	zoom = Zoom;
 }
 
