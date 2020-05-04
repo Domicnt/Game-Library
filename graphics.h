@@ -37,14 +37,15 @@ public:
 	//Functions for rendering text:
 
 	void loadFont(const std::string& path, const int& size);
-	static SDL_Texture* loadTTFTexture(const std::string& text, const SDL_Color& color);
+	SDL_Texture* loadTTFTexture(const std::string& text, const SDL_Color& color) const;
 	
 	//Functions for rendering images:
 
-	static SDL_Texture* loadTexture(const std::string& path);
+	SDL_Texture* loadTexture(const std::string& path) const;
 	void drawImage(const int& x, const int& y, const int& w, const int& h, SDL_Texture* texture) const;
 	void drawImageEx(const int& x, const int& y, const int& w, const int& h, SDL_Texture* texture, const double& angle, const SDL_Point& center) const;
 	void drawPartialImage(const int& textureX, const int& textureY, const int& textureW, const int& textureH, const int& x, const int& y, const int& w, const int& h, SDL_Texture* texture) const;
+	void drawPartialImageEx(const int& textureX, const int& textureY, const int& textureW, const int& textureH, const int& x, const int& y, const int& w, const int& h, SDL_Texture* texture, const double& angle, const SDL_Point& center) const;
 
 	//Render everything to the window, and clear renderer
 	void render() const;
