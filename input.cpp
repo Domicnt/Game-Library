@@ -27,7 +27,7 @@ SDL_Point Input::getPos()
 	return { mX, mY };
 }
 
-void Input::update(bool quit)
+void Input::update(bool* quit)
 {
 	//push up new events
 	SDL_PumpEvents();
@@ -39,7 +39,7 @@ void Input::update(bool quit)
 		switch (e.type) {
 			//the program is closed
 		case SDL_QUIT:
-			quit = true;
+			*quit = true;
 			break;
 			//mouse button pressed
 		case SDL_MOUSEBUTTONDOWN:

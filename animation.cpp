@@ -12,7 +12,7 @@ Animation::Animation(const int& X, const int& Y, const int& W, const int& H, SDL
 	sheetH = SheetH;
 	frameW = FrameW;
 	frameH = FrameH;
-	center = { frameW / 2, frameH / 2 };
+	center = { w / 2, h / 2 };
 	frame = 0;
 	frames = Frames;
 	repeat = false;

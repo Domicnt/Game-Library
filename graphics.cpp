@@ -23,15 +23,15 @@ Graphics::Graphics(const int& width, const int& height)
 
 void Graphics::drawLine(const int& x1, const int& y1, const int& x2, const int& y2) const
 {
-	//check if either end is visible
-	if (camera.visible({x1, y1}) || camera.visible({x2, y2})) 
+	//check if it could be visible
+	if (camera.visible({x1, y1}) || camera.visible({x2, y2}) || camera.visible({x1, y2}) || camera.visible({x2, y1}))
 		SDL_RenderDrawLine(renderer, x1, y1, x2, y2);
 }
 
 void Graphics::drawRect(const int& x1, const int& y1, const int& x2, const int& y2) const
 {
-	//check if either opposite corner is visible
-	if (camera.visible({ x1, y1 }) || camera.visible({ x2, y2 }))
+	//check if it could be visible
+	if (camera.visible({ x1, y1 }) || camera.visible({ x2, y2 }) || camera.visible({x1, y2}) || camera.visible({x2, y1}))
 	{
 		SDL_Rect rect = {x1, y1, x2 - x1, y2 - y1};
 		SDL_RenderDrawRect(renderer, &rect);
@@ -41,7 +41,7 @@ void Graphics::drawRect(const int& x1, const int& y1, const int& x2, const int& 
 void Graphics::fillRect(const int& x1, const int& y1, const int& x2, const int& y2) const
 {
 	//check if either opposite corner is visible
-	if (camera.visible({ x1, y1 }) || camera.visible({ x2, y2 }))
+	if (camera.visible({ x1, y1 }) || camera.visible({ x2, y2 }) || camera.visible({ x1, y2 }) || camera.visible({ x2, y1 }))
 	{
 		SDL_Rect rect = { x1, y1, x2 - x1, y2 - y1 };
 		SDL_RenderFillRect(renderer, &rect);
@@ -50,7 +50,7 @@ void Graphics::fillRect(const int& x1, const int& y1, const int& x2, const int& 
 
 void Graphics::drawCircle(const int& x, const int& y, const int& r) const
 {
-	if (camera.visible({ x - r, y - r }) || camera.visible({ x + r, y + r }))
+	if (camera.visible({ x - r, y - r }) || camera.visible({ x + r, y + r }) || camera.visible({x - r, y + r}) || camera.visible({x + r, y - r}))
 	{
 		const auto diameter = r * 2;
 
@@ -90,7 +90,7 @@ void Graphics::drawCircle(const int& x, const int& y, const int& r) const
 
 void Graphics::fillCircle(const int& x, const int& y, const int& r) const
 {
-	if (camera.visible({ x - r, y - r }) || camera.visible({ x + r, y + r }))
+	if (camera.visible({ x - r, y - r }) || camera.visible({ x + r, y + r }) || camera.visible({ x - r, y + r }) || camera.visible({ x + r, y - r }))
 	{
 		const auto diameter = r * 2;
 
@@ -165,7 +165,7 @@ void Graphics::drawImage(const int& x, const int& y, const int& w, const int& h,
 {
 	//the rect of the place on the screen where the image should be drawn
 	SDL_Rect dstrect = { x, y, w, h };
-	if (camera.visible({x, y}) || camera.visible({ x + w, y + h }))
+	if (camera.visible({x, y}) || camera.visible({ x + w, y + h }) || camera.visible({ x, y + h }) || camera.visible({ x + w, y }))
 		SDL_RenderCopy(renderer, texture, nullptr, &dstrect);
 }
 
@@ -175,7 +175,7 @@ void Graphics::drawImageEx(const int& x, const int& y, const int& w, const int& 
 	SDL_Rect dstrect = { x, y, w, h };
 	//diagonal radius of a square, to test if one would be on screen, even rotated
 	const auto d = sqrt(2) / 2;
-	if (camera.visible({ int(x - w * d), int(y - h * d) }) || camera.visible({ int(x + w + w * d), int(y + h + h * d) }))
+	if (camera.visible({ int(x - w * d), int(y - h * d) }) || camera.visible({ int(x + w + w * d), int(y + h + h * d) }) || camera.visible({ int(x - w * d), int(y + h + h * d) }) || camera.visible({ int(x + w + w * d), int(y - h * d) }))
 		SDL_RenderCopyEx(renderer, texture, nullptr, &dstrect, angle, &center, SDL_FLIP_NONE);
 }
 
@@ -183,7 +183,7 @@ void Graphics::drawPartialImage(const int& textureX, const int& textureY, const 
 {
 	//the rect of the place on the screen where the image should be drawn
 	SDL_Rect dstrect = { x, y, w, h };
-	if (camera.visible({ x, y }) || camera.visible({ x + w, y + h }))
+	if (camera.visible({ x, y }) || camera.visible({ x + w, y + h }) || camera.visible({ x, y + h }) || camera.visible({ x + w, y }))
 	{
 		//the rect of the place on the texture from which the image should be taken
 		SDL_Rect srcrect = { textureX, textureY, textureW, textureH };
@@ -197,7 +197,7 @@ void Graphics::drawPartialImageEx(const int& textureX, const int& textureY, cons
 	SDL_Rect dstrect = { x, y, w, h };
 	//diagonal radius of a square, to test if one would be on screen, even rotated
 	const auto d = sqrt(2) / 2;
-	if (camera.visible({ int(x - w * d), int(y - h * d) }) || camera.visible({ int(x + w + w * d), int(y + h + h * d) }))
+	if (camera.visible({ int(x - w * d), int(y - h * d) }) || camera.visible({ int(x + w + w * d), int(y + h + h * d) }) || camera.visible({ int(x - w * d), int(y + h + h * d) }) || camera.visible({ int(x + w + w * d), int(y - h * d) }))
 	{
 		//the rect of the place on the texture from which the image should be taken
 		SDL_Rect srcrect = { textureX, textureY, textureW, textureH };

@@ -16,5 +16,5 @@ SDL_Point Camera::inverseProjectPoint(SDL_Point point) const
 
 bool Camera::visible(const SDL_Point& point) const
 {
-	return point.x > 0 && point.x < w && point.y > 0 && point.y < h;
+	return point.x >= 0 && point.x <= w && point.y >= 0 && point.y <= h;
 }

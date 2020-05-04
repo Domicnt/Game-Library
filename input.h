@@ -19,5 +19,5 @@ public:
 	//get mouse position
 	static SDL_Point getPos();
 	//update based on inputs
-	void update(bool quit);
+	void update(bool* quit);
 };
