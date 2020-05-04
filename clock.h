@@ -4,11 +4,11 @@
 class Clock {
 public:
 	//time since last reset / initialization
-	long float startTime;
+	double startTime;
 	//frames per second
 	int fps;
 	//the last time value that fps was reset
-	long float lastSecond;
+	double lastSecond;
 
 	//constructor
 	Clock();
@@ -16,7 +16,7 @@ public:
 	//increment fps or print and reset it; must be called every frame
 	void update();
 	//time, in milliseconds
-	static long float checkTime();
+	static double checkTime();
 	//seeds rand() with time
 	static void seedRand();
 };

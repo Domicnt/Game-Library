@@ -22,7 +22,7 @@ public:
 	//texture dimensions, used to find center
 	int textureWidth, textureHeight;
 
-	Object(const b2Body* Body, const SDL_Texture* Texture, const int& TextureWidth, const int& TextureHeight);
+	Object(b2Body* Body);
 
-	void draw(const Graphics& sdl2, const float& scaling);
+	void draw(const Graphics& sdl2);
 };

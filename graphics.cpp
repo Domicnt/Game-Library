@@ -50,75 +50,81 @@ void Graphics::fillRect(const int& x1, const int& y1, const int& x2, const int& 
 
 void Graphics::drawCircle(const int& x, const int& y, const int& r) const
 {
-	const auto diameter = r * 2;
-
-	auto diffX = r - 1;
-	auto diffY = 0;
-	auto tx = 1;
-	auto ty = 1;
-	auto error = tx - diameter;
-
-	while (x >= y)
+	if (camera.visible({ x - r, y - r }) || camera.visible({ x + r, y + r }))
 	{
-		SDL_RenderDrawPoint(renderer, x + diffX, y - diffY);
-		SDL_RenderDrawPoint(renderer, x + diffX, y + diffY);
-		SDL_RenderDrawPoint(renderer, x - diffX, y - diffY);
-		SDL_RenderDrawPoint(renderer, x - diffX, y + diffY);
-		SDL_RenderDrawPoint(renderer, x + diffY, y - diffX);
-		SDL_RenderDrawPoint(renderer, x + diffY, y + diffX);
-		SDL_RenderDrawPoint(renderer, x - diffY, y - diffX);
-		SDL_RenderDrawPoint(renderer, x - diffY, y + diffX);
+		const auto diameter = r * 2;
 
-		if (error <= 0)
-		{
-			++diffY;
-			error += ty;
-			ty += 2;
-		}
+		auto diffX = r - 1;
+		auto diffY = 0;
+		auto tx = 1;
+		auto ty = 1;
+		auto error = tx - diameter;
 
-		if (error > 0)
+		while (x >= y)
 		{
-			--diffX;
-			tx += 2;
-			error += (tx - diameter);
+			SDL_RenderDrawPoint(renderer, x + diffX, y - diffY);
+			SDL_RenderDrawPoint(renderer, x + diffX, y + diffY);
+			SDL_RenderDrawPoint(renderer, x - diffX, y - diffY);
+			SDL_RenderDrawPoint(renderer, x - diffX, y + diffY);
+			SDL_RenderDrawPoint(renderer, x + diffY, y - diffX);
+			SDL_RenderDrawPoint(renderer, x + diffY, y + diffX);
+			SDL_RenderDrawPoint(renderer, x - diffY, y - diffX);
+			SDL_RenderDrawPoint(renderer, x - diffY, y + diffX);
+
+			if (error <= 0)
+			{
+				++diffY;
+				error += ty;
+				ty += 2;
+			}
+
+			if (error > 0)
+			{
+				--diffX;
+				tx += 2;
+				error += (tx - diameter);
+			}
 		}
 	}
 }
 
 void Graphics::fillCircle(const int& x, const int& y, const int& r) const
 {
-	const auto diameter = r * 2;
-
-	auto diffX = r - 1;
-	auto diffY = 0;
-	auto tx = 1;
-	auto ty = 1;
-	auto error = tx - diameter;
-
-	while (x >= y)
+	if (camera.visible({ x - r, y - r }) || camera.visible({ x + r, y + r }))
 	{
-		//  Each of the following renders an octant of the circle
-		fillRect(x + diffX, y - diffY, x, y);
-		fillRect(x + diffX, y + diffY, x, y);
-		fillRect(x - diffX, y - diffY, x, y);
-		fillRect(x - diffX, y + diffY, x, y);
-		fillRect(x + diffY, y - diffX, x, y);
-		fillRect(x + diffY, y + diffX, x, y);
-		fillRect(x - diffY, y - diffX, x, y);
-		fillRect(x - diffY, y + diffX, x, y);
+		const auto diameter = r * 2;
 
-		if (error <= 0)
-		{
-			++diffY;
-			error += ty;
-			ty += 2;
-		}
+		auto diffX = r - 1;
+		auto diffY = 0;
+		auto tx = 1;
+		auto ty = 1;
+		auto error = tx - diameter;
 
-		if (error > 0)
+		while (x >= y)
 		{
-			--diffX;
-			tx += 2;
-			error += (tx - diameter);
+			//  Each of the following renders an octant of the circle
+			fillRect(x + diffX, y - diffY, x, y);
+			fillRect(x + diffX, y + diffY, x, y);
+			fillRect(x - diffX, y - diffY, x, y);
+			fillRect(x - diffX, y + diffY, x, y);
+			fillRect(x + diffY, y - diffX, x, y);
+			fillRect(x + diffY, y + diffX, x, y);
+			fillRect(x - diffY, y - diffX, x, y);
+			fillRect(x - diffY, y + diffX, x, y);
+
+			if (error <= 0)
+			{
+				++diffY;
+				error += ty;
+				ty += 2;
+			}
+
+			if (error > 0)
+			{
+				--diffX;
+				tx += 2;
+				error += (tx - diameter);
+			}
 		}
 	}
 }
@@ -159,32 +165,44 @@ void Graphics::drawImage(const int& x, const int& y, const int& w, const int& h,
 {
 	//the rect of the place on the screen where the image should be drawn
 	SDL_Rect dstrect = { x, y, w, h };
-	SDL_RenderCopy(renderer, texture, nullptr, &dstrect);
+	if (camera.visible({x, y}) || camera.visible({ x + w, y + h }))
+		SDL_RenderCopy(renderer, texture, nullptr, &dstrect);
 }
 
 void Graphics::drawImageEx(const int& x, const int& y, const int& w, const int& h, SDL_Texture* texture, const double& angle, const SDL_Point& center) const
 {
 	//the rect of the place on the screen where the image should be drawn
 	SDL_Rect dstrect = { x, y, w, h };
-	SDL_RenderCopyEx(renderer, texture, nullptr, &dstrect, angle, &center, SDL_FLIP_NONE);
+	//diagonal radius of a square, to test if one would be on screen, even rotated
+	const auto d = sqrt(2) / 2;
+	if (camera.visible({ x - w * d, y - h * d }) || camera.visible({ x + w + w * d, y + h + h * d }))
+		SDL_RenderCopyEx(renderer, texture, nullptr, &dstrect, angle, &center, SDL_FLIP_NONE);
 }
 
 void Graphics::drawPartialImage(const int& textureX, const int& textureY, const int& textureW, const int& textureH, const int& x, const int& y, const int& w, const int& h, SDL_Texture* texture) const
 {
 	//the rect of the place on the screen where the image should be drawn
 	SDL_Rect dstrect = { x, y, w, h };
-	//the rect of the place on the texture from which the image should be taken
-	SDL_Rect srcrect = { textureX, textureY, textureW, textureH };
-	SDL_RenderCopy(renderer, texture, &srcrect, &dstrect);
+	if (camera.visible({ x, y }) || camera.visible({ x + w, y + h }))
+	{
+		//the rect of the place on the texture from which the image should be taken
+		SDL_Rect srcrect = { textureX, textureY, textureW, textureH };
+		SDL_RenderCopy(renderer, texture, &srcrect, &dstrect);
+	}
 }
 
 void Graphics::drawPartialImageEx(const int& textureX, const int& textureY, const int& textureW, const int& textureH, const int& x, const int& y, const int& w, const int& h, SDL_Texture* texture, const double& angle, const SDL_Point& center) const
 {
 	//the rect of the place on the screen where the image should be drawn
 	SDL_Rect dstrect = { x, y, w, h };
-	//the rect of the place on the texture from which the image should be taken
-	SDL_Rect srcrect = { textureX, textureY, textureW, textureH };
-	SDL_RenderCopyEx(renderer, texture, &srcrect, &dstrect, angle, &center, SDL_FLIP_NONE);
+	//diagonal radius of a square, to test if one would be on screen, even rotated
+	const auto d = sqrt(2) / 2;
+	if (camera.visible({ x - w * d, y - h * d }) || camera.visible({ x + w + w * d, y + h + h * d }))
+	{
+		//the rect of the place on the texture from which the image should be taken
+		SDL_Rect srcrect = { textureX, textureY, textureW, textureH };
+		SDL_RenderCopyEx(renderer, texture, &srcrect, &dstrect, angle, &center, SDL_FLIP_NONE);
+	}
 }
 
 void Graphics::render() const

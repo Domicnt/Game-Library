@@ -1,16 +1,20 @@
 #include "camera.h"
 
-SDL_Point Camera::projectPoint(const SDL_Point& point) const
+SDL_FPoint Camera::projectPoint(SDL_FPoint point) const
 {
-	return SDL_Point();
+	point.x = w / 2 + (point.x - w / 2) * zoom - pos.x;
+	point.y = h / 2 + (point.y - h / 2) * zoom - pos.y;
+	return point;
 }
 
-SDL_Point Camera::inverseProjectPoint(const SDL_Point& point) const
+SDL_FPoint Camera::inverseProjectPoint(SDL_FPoint point) const
 {
-	return SDL_Point();
+	point.x = w / 2 + (point.x - w / 2) / zoom - pos.x;
+	point.y = h / 2 + (point.y - h / 2) / zoom - pos.y;
+	return point;
 }
 
-bool Camera::visible(const SDL_Point& point) const
+bool Camera::visible(const SDL_FPoint& point) const
 {
-	return false;
+	return point.x > 0 && point.x < w && point.y > 0 && point.y < h;
 }

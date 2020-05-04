@@ -11,10 +11,10 @@ class Game
 {
 public:
 	//if a basic outline for all physics bodies should be drawn
-	bool ifBasicGraphics;
+	bool basicGraphics;
 
 	//last time a physics step was taken
-	long float lastUpdate;
+	double lastUpdate;
 	//physics updates per second
 	float updatesPerSecond;
 
@@ -27,6 +27,8 @@ public:
 	//constructor
 	Game(b2World* world);
 
+	//basic outline for all physics bodies
+	void basicDraw(Physics& physics, Graphics& graphics);
 	//update objects and make a physics step
-	void update(Physics& Box2DWrapper, Graphics& SDLWrapper);
+	void update(Physics& physics, Graphics& graphics);
 };
