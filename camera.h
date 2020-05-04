@@ -16,6 +16,8 @@ public:
 	SDL_Point projectPoint(SDL_Point point) const;
 	//get a point in the world from a point on screen
 	SDL_Point inverseProjectPoint(SDL_Point point) const;
+	//change the zoom
+	void changeZoom(const float& Zoom);
 
 	//check if a point would be visible on screen
 	bool visible(const SDL_Point& point) const;

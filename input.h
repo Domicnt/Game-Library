@@ -15,7 +15,7 @@ public:
 	Input();
 
 	//check if a specific key is down
-	static bool checkKey(const char* key);
+	static bool checkKey(char key);
 	//get mouse position
 	static SDL_Point getPos();
 	//update based on inputs
