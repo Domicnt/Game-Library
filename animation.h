@@ -42,5 +42,5 @@ public:
 	Animation(const int& X, const int& Y, const int& W, const int& H, SDL_Texture* Texture, const int& SheetW, const int& SheetH, const int& FrameW, const int& FrameH, const int& Frames);
 
 	//draws a frame and advances to the next, returns false if it has reached the last frame
-	bool draw(SDL_Renderer* renderer);
+	bool draw(SDL_Renderer* renderer, Camera camera);
 };

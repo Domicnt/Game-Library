@@ -22,7 +22,7 @@ Animation::Animation(const int& X, const int& Y, const int& W, const int& H, SDL
 	lastAnimationStep = Clock::checkTime();
 }
 
-bool Animation::draw(SDL_Renderer* renderer)
+bool Animation::draw(SDL_Renderer* renderer, Camera camera)
 {
 	//current frame * frame width / total width
 	int row = floor(frame * frameW / sheetW);
@@ -31,7 +31,7 @@ bool Animation::draw(SDL_Renderer* renderer)
 	//row * frame height
 	const auto srcY = row * frameH;
 	//draw to renderer
-	SDL_Rect dstrect = { pos.x, pos.y, w, h };
+	SDL_Rect dstrect = { pos.x + w / 2 - w * camera.zoom / 2, pos.y + h / 2 - h * camera.zoom / 2, w * camera.zoom, h * camera.zoom };
 	SDL_Rect srcrect = { srcX, srcY, frameW, frameH };
 	SDL_RenderCopyEx(renderer, texture, &srcrect, &dstrect, angle, &center, SDL_FLIP_NONE);
 	//increment frame if not paused

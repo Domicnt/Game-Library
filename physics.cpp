@@ -18,7 +18,7 @@ b2Body* Physics::createBody(const bool& dynamic, const b2Vec2& pos)
 	if (dynamic) bodyDef.type = b2_dynamicBody;
 	else bodyDef.type = b2_staticBody;
 	//set position
-	const SDL_Point newPos = camera->inverseProjectPoint({ int(pos.x), int(pos.y)});
+	const SDL_Point newPos = { int(pos.x / camera->scaling), int(pos.y / camera->scaling)};
 	bodyDef.position.Set(newPos.x, newPos.y);
 	//create body
 	auto* body = world->CreateBody(&bodyDef);
@@ -36,7 +36,8 @@ void Physics::addFixtureToBody(b2Body* body, std::vector<b2Vec2> vertices) const
 	//scale vertices
 	for (auto& i : vertices)
 	{
-		camera->inverseProjectPoint({ int(i.x), int(i.y) });
+		i.x /= camera->scaling;
+		i.y /= camera->scaling;
 	}
 	
 	//line
@@ -57,6 +58,17 @@ void Physics::addFixtureToBody(b2Body* body, std::vector<b2Vec2> vertices) const
 
 		body->CreateFixture(&fixtureDef);
 	}
+}
+
+b2Joint* Physics::createJoint(b2Body* body1, b2Body* body2)
+{
+	//set up the definition for a xxx joint
+	b2RevoluteJointDef jointDef;
+	jointDef.bodyA = body1;
+	jointDef.bodyB = body2;
+
+	//create the joint and return it
+	return (b2RevoluteJoint*)world->CreateJoint(&jointDef);
 }
 
 void Physics::step()

@@ -27,6 +27,9 @@ public:
 	//add a fixture to a body, takes relative position of vertices, which must be in counter-clockwise order and cannot be concave
 	void addFixtureToBody(b2Body* body, std::vector<b2Vec2> vertices) const;
 
+	//create a revolute joint between two bodies
+	b2Joint* createJoint(b2Body* body1, b2Body* body2);
+	
 	//perform one physics step
 	void step();
 };

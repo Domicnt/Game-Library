@@ -1,27 +1,33 @@
 #include "camera.h"
+#include "functions.h"
 
-SDL_Point Camera::projectPoint(SDL_Point point) const
+Camera::Camera(const int& W, const int& H, const float& Scaling)
 {
-	point.x = w / 2 + (point.x - w / 2) * zoom - pos.x;
-	point.y = h / 2 + (point.y - h / 2) * zoom - pos.y;
-	return point;
+	w = W;
+	h = H;
+	scaling = Scaling;
+	zoom = 1;
+	pos = { 0, 0 };
+}
+
+SDL_Point Camera::projectPoint(const float& x, const float& y) const
+{
+	return { int(x * (scaling * zoom) - pos.x), int(y * (scaling * zoom) - pos.y) };
 }
 
 SDL_Point Camera::inverseProjectPoint(SDL_Point point) const
 {
-	point.x = w / 2 + (point.x - w / 2) / zoom - pos.x;
-	point.y = h / 2 + (point.y - h / 2) / zoom - pos.y;
-	return point;
+	return { int((point.x + pos.x) / zoom), int((point.y + pos.y) / zoom) };
 }
 
-void Camera::changeZoom(const float& Zoom)
+void Camera::changeZoom(const float& amount)
 {
-	SDL_Point center = {pos.x + w / 2 * zoom, pos.y + h / 2 * zoom};
-	pos = { int(center.x - w / 2 * Zoom), int(center.y - h / 2 * Zoom) };
-	zoom = Zoom;
+	pos.x += w / 2 * amount;
+	pos.y += h / 2 * amount;
+	zoom += amount;
 }
 
 bool Camera::visible(const SDL_Point& point) const
 {
-	return point.x >= 0 && point.x <= w && point.y >= 0 && point.y <= h;
+	return true;// point.x >= 0 && point.x <= w && point.y >= 0 && point.y <= h;
 }

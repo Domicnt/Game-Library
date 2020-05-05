@@ -24,5 +24,5 @@ public:
 
 	Object(b2Body* Body);
 
-	void draw(const Graphics& sdl2);
+	void draw(const Graphics& graphics);
 };
