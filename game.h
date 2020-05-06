@@ -13,6 +13,8 @@ public:
 	//if a basic outline for all physics bodies should be drawn
 	bool basicGraphics;
 
+	Camera* camera;
+
 	//last time a physics step was taken
 	double lastUpdate;
 	//physics updates per second
@@ -25,7 +27,7 @@ public:
 	std::vector<Object> objects;
 
 	//constructor
-	Game(b2World* world);
+	Game(b2World* world, Camera* Camera);
 
 	//basic outline for all physics bodies
 	void basicDraw(Physics& physics, Graphics& graphics);

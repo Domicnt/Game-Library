@@ -28,4 +28,6 @@ public:
 
 	//check if a point would be visible on screen
 	bool visible(const SDL_Point& point) const;
+	//check if a point, scaled up, would be visible on screen
+	bool preScaledVisible(const SDL_FPoint& point) const;
 };

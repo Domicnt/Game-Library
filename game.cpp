@@ -2,7 +2,7 @@
 
 #include "clock.h"
 
-Game::Game(b2World* world)
+Game::Game(b2World* world, Camera* Camera)
 {
 	basicGraphics = true;
 	lastUpdate = Clock::checkTime();
@@ -12,6 +12,7 @@ Game::Game(b2World* world)
 	bodyDef.type = b2_staticBody;
 	bodyDef.position.Set(0, 0);
 	terrain = world->CreateBody(&bodyDef);
+	camera = Camera;
 }
 
 void Game::basicDraw(Physics& physics, Graphics& graphics)
@@ -43,9 +44,13 @@ void Game::basicDraw(Physics& physics, Graphics& graphics)
 				}
 				for (auto j = 0; j < v; j++)
 				{
-					const SDL_Point p1 = graphics.camera.projectPoint(cos(angle) * shape->m_vertices[j].x - sin(angle) * shape->m_vertices[j].y + pos.x, sin(angle) * shape->m_vertices[j].x + cos(angle) * shape->m_vertices[j].y + pos.y);
-					const SDL_Point p2 = graphics.camera.projectPoint(cos(angle) * shape->m_vertices[(j + 1) % v].x - sin(angle) * shape->m_vertices[(j + 1) % v].y + pos.x, sin(angle) * shape->m_vertices[(j + 1) % v].x + cos(angle) * shape->m_vertices[(j + 1) % v].y + pos.y);
-					graphics.drawLine(p1.x, p1.y, p2.x, p2.y);
+					const SDL_FPoint p1 = { cos(angle) * shape->m_vertices[j].x - sin(angle) * shape->m_vertices[j].y + pos.x, sin(angle) * shape->m_vertices[j].x + cos(angle) * shape->m_vertices[j].y + pos.y };
+					const SDL_FPoint p2 = { cos(angle) * shape->m_vertices[(j + 1) % v].x - sin(angle) * shape->m_vertices[(j + 1) % v].y + pos.x, sin(angle) * shape->m_vertices[(j + 1) % v].x + cos(angle) * shape->m_vertices[(j + 1) % v].y + pos.y };
+					if (!camera->preScaledVisible(p1) && !camera->preScaledVisible(p2))
+						continue;
+					const auto pp1 = graphics.camera.projectPoint( p1.x, p1.y );
+					const auto pp2 = graphics.camera.projectPoint( p2.x, p2.y );
+					graphics.drawLine(pp1.x, pp1.y, pp2.x, pp2.y);
 				}
 				break;
 			}
@@ -53,9 +58,13 @@ void Game::basicDraw(Physics& physics, Graphics& graphics)
 			case b2Shape::e_edge:
 			{
 				const auto shape = (b2EdgeShape*)f->GetShape();
-				const SDL_Point p1 = graphics.camera.projectPoint(cos(angle) * shape->m_vertex1.x - sin(angle) * shape->m_vertex1.y + pos.x, sin(angle) * shape->m_vertex1.x + cos(angle) * shape->m_vertex1.y + pos.y);
-				const SDL_Point p2 = graphics.camera.projectPoint(cos(angle) * shape->m_vertex2.x - sin(angle) * shape->m_vertex2.y + pos.x, sin(angle) * shape->m_vertex2.x + cos(angle) * shape->m_vertex2.y + pos.y);
-				graphics.drawLine(p1.x, p1.y, p2.x, p2.y);
+				const SDL_FPoint p1 = { cos(angle) * shape->m_vertex1.x - sin(angle) * shape->m_vertex1.y + pos.x, sin(angle) * shape->m_vertex1.x + cos(angle) * shape->m_vertex1.y + pos.y };
+				const SDL_FPoint p2 = { cos(angle) * shape->m_vertex2.x - sin(angle) * shape->m_vertex2.y + pos.x, sin(angle) * shape->m_vertex2.x + cos(angle) * shape->m_vertex2.y + pos.y };
+				if (!camera->preScaledVisible(p1) && !camera->preScaledVisible(p2))
+					continue;
+				const auto pp1 = graphics.camera.projectPoint(p1.x, p1.y);
+				const auto pp2 = graphics.camera.projectPoint(p2.x, p2.y);
+				graphics.drawLine(pp1.x, pp1.y, pp2.x, pp2.y);
 				break;
 			}
 			}
