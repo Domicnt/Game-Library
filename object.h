@@ -21,6 +21,8 @@ public:
 
 	//texture dimensions, used to find center
 	int textureWidth, textureHeight;
+	//body dimensions
+	float bodyWidth, bodyHeight;
 
 	Object(b2Body* Body);
 

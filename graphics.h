@@ -43,9 +43,9 @@ public:
 
 	SDL_Texture* loadTexture(const std::string& path) const;
 	void drawImage(const int& x, const int& y, const int& w, const int& h, SDL_Texture* texture) const;
-	void drawImageEx(const int& x, const int& y, const int& w, const int& h, SDL_Texture* texture, const double& angle, const SDL_Point& center) const;
+	void drawImageEx(const int& x, const int& y, const int& w, const int& h, SDL_Texture* texture, const double& angle) const;
 	void drawPartialImage(const int& textureX, const int& textureY, const int& textureW, const int& textureH, const int& x, const int& y, const int& w, const int& h, SDL_Texture* texture) const;
-	void drawPartialImageEx(const int& textureX, const int& textureY, const int& textureW, const int& textureH, const int& x, const int& y, const int& w, const int& h, SDL_Texture* texture, const double& angle, const SDL_Point& center) const;
+	void drawPartialImageEx(const int& textureX, const int& textureY, const int& textureW, const int& textureH, const int& x, const int& y, const int& w, const int& h, SDL_Texture* texture, const double& angle) const;
 
 	//Render everything to the window, and clear renderer
 	void render() const;

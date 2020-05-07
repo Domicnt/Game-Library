@@ -50,7 +50,7 @@ void Game::basicDraw(Physics& physics, Graphics& graphics)
 						continue;
 					const auto pp1 = graphics.camera.projectPoint( p1.x, p1.y );
 					const auto pp2 = graphics.camera.projectPoint( p2.x, p2.y );
-					graphics.drawLine(pp1.x, pp1.y, pp2.x, pp2.y);
+					SDL_RenderDrawLine(graphics.renderer, pp1.x, pp1.y, pp2.x, pp2.y);
 				}
 				break;
 			}
@@ -61,10 +61,10 @@ void Game::basicDraw(Physics& physics, Graphics& graphics)
 				const SDL_FPoint p1 = { cos(angle) * shape->m_vertex1.x - sin(angle) * shape->m_vertex1.y + pos.x, sin(angle) * shape->m_vertex1.x + cos(angle) * shape->m_vertex1.y + pos.y };
 				const SDL_FPoint p2 = { cos(angle) * shape->m_vertex2.x - sin(angle) * shape->m_vertex2.y + pos.x, sin(angle) * shape->m_vertex2.x + cos(angle) * shape->m_vertex2.y + pos.y };
 				if (!camera->preScaledVisible(p1) && !camera->preScaledVisible(p2))
-					continue;
+					break;
 				const auto pp1 = graphics.camera.projectPoint(p1.x, p1.y);
 				const auto pp2 = graphics.camera.projectPoint(p2.x, p2.y);
-				graphics.drawLine(pp1.x, pp1.y, pp2.x, pp2.y);
+				SDL_RenderDrawLine(graphics.renderer, pp1.x, pp1.y, pp2.x, pp2.y);
 				break;
 			}
 			}

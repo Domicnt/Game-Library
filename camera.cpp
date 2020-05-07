@@ -27,12 +27,18 @@ void Camera::changeZoom(const float& amount)
 	zoom += amount;
 }
 
-bool Camera::visible(const SDL_Point& point) const
+bool Camera::visible(SDL_Point point) const
 {
 	return point.x >= 0 && point.x <= w && point.y >= 0 && point.y <= h;
 }
 
-bool Camera::preScaledVisible(const SDL_FPoint& point) const
+bool Camera::preScaledVisible(SDL_FPoint point) const
 {
-	return point.x >= 0 && point.x <= w / (scaling * zoom) && point.y >= 0 && point.y <= h / (scaling * zoom);
+	if (zoom == 0)
+		return false;
+	point.x *= scaling * zoom;
+	point.y *= scaling * zoom;
+	point.x -= pos.x;
+	point.y -= pos.y;
+	return point.x >= 0 && point.x <= w && point.y >= 0 && point.y <= h;
 }

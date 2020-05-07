@@ -33,7 +33,7 @@ bool Animation::draw(SDL_Renderer* renderer, Camera camera)
 	//draw to renderer
 	SDL_Rect dstrect = { pos.x + w / 2 - w * camera.zoom / 2, pos.y + h / 2 - h * camera.zoom / 2, w * camera.zoom, h * camera.zoom };
 	SDL_Rect srcrect = { srcX, srcY, frameW, frameH };
-	SDL_RenderCopyEx(renderer, texture, &srcrect, &dstrect, angle, &center, SDL_FLIP_NONE);
+	SDL_RenderCopyEx(renderer, texture, &srcrect, &dstrect, angle, nullptr, SDL_FLIP_NONE);
 	//increment frame if not paused
 	if (lastAnimationStep + 1000 / framesPerSecond <= Clock::checkTime()) {
 		lastAnimationStep += 1000 / framesPerSecond;

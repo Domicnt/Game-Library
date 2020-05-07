@@ -27,7 +27,7 @@ public:
 	void changeZoom(const float& amount);
 
 	//check if a point would be visible on screen
-	bool visible(const SDL_Point& point) const;
+	bool visible(SDL_Point point) const;
 	//check if a point, scaled up, would be visible on screen
-	bool preScaledVisible(const SDL_FPoint& point) const;
+	bool preScaledVisible(SDL_FPoint point) const;
 };
