@@ -26,5 +26,6 @@ public:
 
 	Object(b2Body* Body);
 
+	//draw texture/animation
 	void draw(const Graphics& graphics);
 };

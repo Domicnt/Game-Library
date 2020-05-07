@@ -29,6 +29,8 @@ public:
 	//constructor
 	Game(Physics& physics);
 
+	//basic outline for a physics body
+	void basicDrawBody(b2Body* body, Graphics& graphics);
 	//basic outline for all physics bodies
 	void basicDraw(Physics& physics, Graphics& graphics);
 	//checks if it is time for an update
