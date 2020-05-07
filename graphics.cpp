@@ -165,42 +165,32 @@ void Graphics::drawImage(const int& x, const int& y, const int& w, const int& h,
 {
 	//the rect of the place on the screen where the image should be drawn
 	SDL_Rect dstrect = { x + w / 2 - w * camera.zoom / 2, y + h / 2 - h * camera.zoom / 2, w * camera.zoom, h * camera.zoom };
-	if (camera.visible({ x, y }) || camera.visible({ x + w, y + h }) || camera.visible({ x, y + h }) || camera.visible({ x + w, y }))
-		SDL_RenderCopy(renderer, texture, nullptr, &dstrect);
+	SDL_RenderCopy(renderer, texture, nullptr, &dstrect);
 }
 
 void Graphics::drawImageEx(const int& x, const int& y, const int& w, const int& h, SDL_Texture* texture, const double& angle) const
 {
 	//the rect of the place on the screen where the image should be drawn
 	SDL_Rect dstrect = { x + w / 2 - w * camera.zoom / 2, y + h / 2 - h * camera.zoom / 2, w * camera.zoom, h * camera.zoom };
-	const auto r = sqrt(dstrect.w * dstrect.w + dstrect.h * dstrect.h);
-	if (camera.visible({ int(x - (r - w / 2)), int(y - (r - h / 2)) }) || camera.visible({ int(x + w + (r - w / 2)), int(y + h + (r - h / 2)) }) || camera.visible({ int(x - (r - w / 2)), int(y + h + (r - h / 2)) }) || camera.visible({ int(x + w + (r - w / 2)), int(y - (r - h / 2)) }))
-		SDL_RenderCopyEx(renderer, texture, nullptr, &dstrect, angle, nullptr, SDL_FLIP_NONE);
+	SDL_RenderCopyEx(renderer, texture, nullptr, &dstrect, angle, nullptr, SDL_FLIP_NONE);
 }
 
 void Graphics::drawPartialImage(const int& textureX, const int& textureY, const int& textureW, const int& textureH, const int& x, const int& y, const int& w, const int& h, SDL_Texture* texture) const
 {
 	//the rect of the place on the screen where the image should be drawn
 	SDL_Rect dstrect = { x + w / 2 - w * camera.zoom / 2, y + h / 2 - h * camera.zoom / 2, w * camera.zoom, h * camera.zoom };
-	if (camera.visible({ x, y }) || camera.visible({ x + w, y + h }) || camera.visible({ x, y + h }) || camera.visible({ x + w, y }))
-	{
-		//the rect of the place on the texture from which the image should be taken
-		SDL_Rect srcrect = { textureX, textureY, textureW, textureH };
-		SDL_RenderCopy(renderer, texture, &srcrect, &dstrect);
-	}
+	//the rect of the place on the texture from which the image should be taken
+	SDL_Rect srcrect = { textureX, textureY, textureW, textureH };
+	SDL_RenderCopy(renderer, texture, &srcrect, &dstrect);
 }
 
 void Graphics::drawPartialImageEx(const int& textureX, const int& textureY, const int& textureW, const int& textureH, const int& x, const int& y, const int& w, const int& h, SDL_Texture* texture, const double& angle) const
 {
 	//the rect of the place on the screen where the image should be drawn
 	SDL_Rect dstrect = { x + w / 2 - w * camera.zoom / 2, y + h / 2 - h * camera.zoom / 2, w * camera.zoom, h * camera.zoom };
-	const auto r = sqrt(dstrect.w * dstrect.w + dstrect.h * dstrect.h);
-	if (camera.visible({ int(x - (r - w/2)), int(y - (r - h/2)) }) || camera.visible({ int(x + w + (r - w / 2)), int(y + h + (r - h / 2)) }) || camera.visible({ int(x - (r - w / 2)), int(y + h + (r - h / 2)) }) || camera.visible({ int(x + w + (r - w / 2)), int(y - (r - h / 2)) }))
-	{
-		//the rect of the place on the texture from which the image should be taken
-		SDL_Rect srcrect = { textureX, textureY, textureW, textureH };
-		SDL_RenderCopyEx(renderer, texture, &srcrect, &dstrect, angle, nullptr, SDL_FLIP_NONE);
-	}
+	//the rect of the place on the texture from which the image should be taken
+	SDL_Rect srcrect = { textureX, textureY, textureW, textureH };
+	SDL_RenderCopyEx(renderer, texture, &srcrect, &dstrect, angle, nullptr, SDL_FLIP_NONE);
 }
 
 void Graphics::render() const

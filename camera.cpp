@@ -6,6 +6,8 @@ Camera::Camera(const int& W, const int& H, const float& Scaling)
 	w = W;
 	h = H;
 	scaling = Scaling;
+	sw = w / scaling;
+	sh = h / scaling;
 	zoom = 1;
 	pos = { 0, 0 };
 }
@@ -32,13 +34,18 @@ bool Camera::visible(SDL_Point point) const
 	return point.x >= 0 && point.x <= w && point.y >= 0 && point.y <= h;
 }
 
-bool Camera::preScaledVisible(SDL_FPoint point) const
+bool Camera::b2BodyVisible(b2Body* body) const
 {
-	if (zoom == 0)
-		return false;
-	point.x *= scaling * zoom;
-	point.y *= scaling * zoom;
-	point.x -= pos.x;
-	point.y -= pos.y;
-	return point.x >= 0 && point.x <= w && point.y >= 0 && point.y <= h;
+	//find aabb
+	b2AABB aabb;
+	aabb.lowerBound = b2Vec2(FLT_MAX, FLT_MAX);
+	aabb.upperBound = b2Vec2(-FLT_MAX, -FLT_MAX);
+	for (b2Fixture* fixture = body->GetFixtureList(); fixture; fixture = fixture->GetNext())
+	{
+		aabb.Combine(aabb, fixture->GetAABB(0));
+	}
+	const auto extents = aabb.GetExtents();
+	const auto center = aabb.GetCenter();
+	//check collision with frame
+	return Functions::rectVsRect(center.x - extents.x, center.y - extents.y, extents.x * 2, extents.y * 2, pos.x / scaling / zoom, pos.y / scaling / zoom, sw / zoom, sh / zoom);
 }

@@ -11,6 +11,8 @@ Object::Object(b2Body* Body)
 
 void Object::draw(const Graphics& graphics)
 {
+	if (!graphics.camera.b2BodyVisible(body))
+		return;
 	const auto bodyPoint = body->GetWorldCenter();
 	const auto center = graphics.camera.projectPoint(bodyPoint.x, bodyPoint.y);
 	if(currentTexture != -1)

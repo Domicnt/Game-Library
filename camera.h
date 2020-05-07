@@ -1,6 +1,7 @@
 #pragma once
 
 #include "vcpkg/installed/x86-windows/include/SDL2/SDL.h"
+#include "vcpkg/installed/x86-windows/include/box2d/box2d.h"
 
 class Camera
 {
@@ -9,8 +10,12 @@ public:
 	SDL_FPoint pos;
 	//size of the window being rendered to
 	int w, h;
+	
 	//scaling for physics objects
 	float scaling;
+	//width and height of the camera in relation to the box2d world
+	float sw, sh;
+	
 	//magnification for everything
 	float zoom;
 
@@ -28,6 +33,6 @@ public:
 
 	//check if a point would be visible on screen
 	bool visible(SDL_Point point) const;
-	//check if a point, scaled up, would be visible on screen
-	bool preScaledVisible(SDL_FPoint point) const;
+	//check if a box2d body, scaled up, might be visible on screen
+	bool b2BodyVisible(b2Body* body) const;
 };

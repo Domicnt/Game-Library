@@ -27,7 +27,7 @@ public:
 	std::vector<Object> objects;
 
 	//constructor
-	Game(b2World* world, Camera* Camera);
+	Game(Physics& physics);
 
 	//basic outline for all physics bodies
 	void basicDraw(Physics& physics, Graphics& graphics);

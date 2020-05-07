@@ -36,7 +36,7 @@ bool Animation::draw(SDL_Renderer* renderer, Camera camera)
 	SDL_RenderCopyEx(renderer, texture, &srcrect, &dstrect, angle, nullptr, SDL_FLIP_NONE);
 	//increment frame if not paused
 	if (lastAnimationStep + 1000 / framesPerSecond <= Clock::checkTime()) {
-		lastAnimationStep += 1000 / framesPerSecond;
+		lastAnimationStep = Clock::checkTime();
 		if (!pause) frame++;
 	}
 	//return false/restart if it has played all frames
