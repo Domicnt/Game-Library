@@ -6,6 +6,7 @@
 #include <string>
 
 #include "camera.h"
+#include "clock.h"
 
 class Graphics
 {
@@ -23,6 +24,8 @@ public:
 	//font for rendered text
 	TTF_Font* font;
 
+	SDL_Texture* fpsTexture;
+
 	//constructor, takes desired width and height of window
 	Graphics(const int& width, const int& height);
 
@@ -38,6 +41,7 @@ public:
 
 	void loadFont(const std::string& path, const int& size);
 	SDL_Texture* loadTTFTexture(const std::string& text, const SDL_Color& color) const;
+	void drawFPS(Clock clock, const SDL_Rect& dstRect);
 	
 	//Functions for rendering images:
 

@@ -19,6 +19,8 @@ Graphics::Graphics(const int& width, const int& height)
 	r = 255;
 	g = 255;
 	b = 255;
+
+	loadFont("../Game-Library/font.ttf", 12);
 }
 
 void Graphics::drawLine(const int& x1, const int& y1, const int& x2, const int& y2) const
@@ -132,6 +134,9 @@ void Graphics::fillCircle(const int& x, const int& y, const int& r) const
 void Graphics::loadFont(const std::string& path, const int& size)
 {
 	font = TTF_OpenFont(path.c_str(), size);
+	if (font == nullptr) {
+		printf("Unable to load font %s. Error message: %s\n", path.c_str(), TTF_GetError());
+	}
 }
 
 SDL_Texture* Graphics::loadTTFTexture(const std::string& text, const SDL_Color& color) const
@@ -143,6 +148,22 @@ SDL_Texture* Graphics::loadTTFTexture(const std::string& text, const SDL_Color& 
 	//Get rid of old loaded surface
 	SDL_FreeSurface(textSurface);
 	return newTexture;
+}
+
+void Graphics::drawFPS(Clock clock, const SDL_Rect& dstRect)
+{
+	if(!fpsTexture || clock.updateTime())
+	{
+		//destroys texture if it exists
+		if (!!fpsTexture)
+			SDL_DestroyTexture(fpsTexture);
+		//load new texture
+		const auto tempFont = font;
+		loadFont("../Game-Library/font.ttf", 12);
+		fpsTexture = loadTTFTexture(std::to_string(clock.fps), { 0,0,0,255 });
+		font = tempFont;
+	}
+	drawImage(dstRect.x, dstRect.y, dstRect.w, dstRect.h, fpsTexture);
 }
 
 SDL_Texture* Graphics::loadTexture(const std::string& path) const

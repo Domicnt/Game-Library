@@ -7,12 +7,15 @@ public:
 	double startTime;
 	//frames per second
 	int fps;
-	//the last time value that fps was reset
+	int fpsCount;
+	//the last time value that fpsCount was reset
 	double lastSecond;
 
 	//constructor
 	Clock();
-	
+
+	//true after one second has passed
+	bool updateTime() const;
 	//increment fps or print and reset it; must be called every frame
 	void update();
 	//time, in milliseconds
