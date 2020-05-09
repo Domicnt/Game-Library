@@ -11,12 +11,16 @@ Physics::Physics(const float& x, const float& y, Camera* Camera)
 	camera = Camera;
 }
 
-b2Body* Physics::createBody(const bool& dynamic, const b2Vec2& pos)
+b2Body* Physics::createBody(const int& dynamic, const b2Vec2& pos)
 {
 	//create bodyDef
 	b2BodyDef bodyDef;
-	if (dynamic) bodyDef.type = b2_dynamicBody;
-	else bodyDef.type = b2_staticBody;
+	if (dynamic == 2) 
+		bodyDef.type = b2_kinematicBody;
+	else if (dynamic) 
+		bodyDef.type = b2_dynamicBody;
+	else 
+		bodyDef.type = b2_staticBody;
 	//set position
 	const b2Vec2 newPos = { pos.x / camera->scaling, pos.y / camera->scaling};
 	bodyDef.position.Set(newPos.x, newPos.y);
@@ -58,6 +62,27 @@ void Physics::addFixtureToBody(b2Body* body, std::vector<b2Vec2> vertices) const
 
 		body->CreateFixture(&fixtureDef);
 	}
+}
+
+void Physics::addCircularFixtureToBody(b2Body* body, float radius, b2Vec2 pos) const
+{
+	//create fixtureDef
+	b2FixtureDef fixtureDef;
+	fixtureDef.density = 1.0f;
+	fixtureDef.friction = 1.0f;
+	fixtureDef.restitution = 0.5f;
+
+	//scale vertices
+	pos.x /= camera->scaling;
+	pos.y /= camera->scaling;
+	radius /= camera->scaling;
+
+	b2CircleShape shape;
+	shape.m_p = pos;
+	shape.m_radius = radius;
+	fixtureDef.shape = &shape;
+
+	body->CreateFixture(&fixtureDef);
 }
 
 b2Joint* Physics::createJoint(b2Body* body1, b2Body* body2)

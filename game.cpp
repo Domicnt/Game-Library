@@ -8,7 +8,7 @@ Game::Game(Physics& physics)
 	lastUpdate = Clock::checkTime();
 	updatesPerSecond = 60;
 	//creating a static terrain object
-	terrain = physics.createBody(false, {0,0});
+	terrain = physics.createBody(false, { 0,0 });
 	//camera
 	camera = physics.camera;
 }
@@ -51,6 +51,13 @@ void Game::basicDrawBody(b2Body* body, Graphics& graphics)
 			const auto p2 = graphics.camera.projectPoint(cos(angle) * shape->m_vertex2.x - sin(angle) * shape->m_vertex2.y + pos.x, sin(angle) * shape->m_vertex2.x + cos(angle) * shape->m_vertex2.y + pos.y);
 			SDL_RenderDrawLine(graphics.renderer, p1.x, p1.y, p2.x, p2.y);
 			break;
+		}
+		//fixture is a circle
+		case b2Shape::e_circle:
+		{
+			const auto shape = (b2CircleShape*)f->GetShape();
+			const auto p = graphics.camera.projectPoint(cos(angle) * shape->m_p.x - sin(angle) * shape->m_p.y + pos.x, sin(angle) * shape->m_p.x + cos(angle) * shape->m_p.y + pos.y);
+			graphics.drawCircle(p.x,p.y,shape->m_radius * graphics.camera.scaling * graphics.camera.zoom);
 		}
 		}
 	}

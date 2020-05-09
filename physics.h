@@ -23,9 +23,11 @@ public:
 	Physics(const float& x, const float& y, Camera* Camera);
 
 	//create a physics body
-	b2Body* createBody(const bool& dynamic, const b2Vec2& pos);
+	b2Body* createBody(const int& dynamic, const b2Vec2& pos);
 	//add a fixture to a body, takes relative position of vertices, which must be in counter-clockwise order and cannot be concave
 	void addFixtureToBody(b2Body* body, std::vector<b2Vec2> vertices) const;
+	//add a fixture to a body, takes radius and relative position
+	void addCircularFixtureToBody(b2Body* body, float radius, b2Vec2 pos) const;
 
 	//create a revolute joint between two bodies
 	b2Joint* createJoint(b2Body* body1, b2Body* body2);

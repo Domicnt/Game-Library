@@ -57,37 +57,30 @@ void Graphics::drawCircle(const int& x, const int& y, const int& r) const
 {
 	if (camera.visible({ x - r, y - r }) || camera.visible({ x + r, y + r }) || camera.visible({ x - r, y + r }) || camera.visible({ x + r, y - r }))
 	{
-		const auto diameter = r * 2;
+		auto tx = r;
+		auto ty = 0;
+		auto error = 0;
 
-		auto diffX = r - 1;
-		auto diffY = 0;
-		auto tx = 1;
-		auto ty = 1;
-		auto error = tx - diameter;
-
-		while (x >= y)
+		while (tx >= ty)
 		{
-			SDL_RenderDrawPoint(renderer, x + diffX, y - diffY);
-			SDL_RenderDrawPoint(renderer, x + diffX, y + diffY);
-			SDL_RenderDrawPoint(renderer, x - diffX, y - diffY);
-			SDL_RenderDrawPoint(renderer, x - diffX, y + diffY);
-			SDL_RenderDrawPoint(renderer, x + diffY, y - diffX);
-			SDL_RenderDrawPoint(renderer, x + diffY, y + diffX);
-			SDL_RenderDrawPoint(renderer, x - diffY, y - diffX);
-			SDL_RenderDrawPoint(renderer, x - diffY, y + diffX);
+			SDL_RenderDrawPoint(renderer, x + tx, y - ty);
+			SDL_RenderDrawPoint(renderer, x + tx, y + ty);
+			SDL_RenderDrawPoint(renderer, x - tx, y - ty);
+			SDL_RenderDrawPoint(renderer, x - tx, y + ty);
+			SDL_RenderDrawPoint(renderer, x + ty, y - tx);
+			SDL_RenderDrawPoint(renderer, x + ty, y + tx);
+			SDL_RenderDrawPoint(renderer, x - ty, y - tx);
+			SDL_RenderDrawPoint(renderer, x - ty, y + tx);
 
 			if (error <= 0)
 			{
-				++diffY;
-				error += ty;
-				ty += 2;
+				ty++;
+				error += 2 * ty + 1;
 			}
-
 			if (error > 0)
 			{
-				--diffX;
-				tx += 2;
-				error += (tx - diameter);
+				tx--;
+				error -= 2 * tx + 1;
 			}
 		}
 	}
@@ -97,38 +90,30 @@ void Graphics::fillCircle(const int& x, const int& y, const int& r) const
 {
 	if (camera.visible({ x - r, y - r }) || camera.visible({ x + r, y + r }) || camera.visible({ x - r, y + r }) || camera.visible({ x + r, y - r }))
 	{
-		const auto diameter = r * 2;
+		auto tx = r;
+		auto ty = 0;
+		auto error = 0;
 
-		auto diffX = r - 1;
-		auto diffY = 0;
-		auto tx = 1;
-		auto ty = 1;
-		auto error = tx - diameter;
-
-		while (x >= y)
+		while (tx >= ty)
 		{
-			//  Each of the following renders an octant of the circle
-			fillRect(x + diffX, y - diffY, x, y);
-			fillRect(x + diffX, y + diffY, x, y);
-			fillRect(x - diffX, y - diffY, x, y);
-			fillRect(x - diffX, y + diffY, x, y);
-			fillRect(x + diffY, y - diffX, x, y);
-			fillRect(x + diffY, y + diffX, x, y);
-			fillRect(x - diffY, y - diffX, x, y);
-			fillRect(x - diffY, y + diffX, x, y);
+			fillRect(x + tx, y - ty, x, y);
+			fillRect(x + tx, y + ty, x, y);
+			fillRect(x - tx, y - ty, x, y);
+			fillRect(x - tx, y + ty, x, y);
+			fillRect(x + ty, y - tx, x, y);
+			fillRect(x + ty, y + tx, x, y);
+			fillRect(x - ty, y - tx, x, y);
+			fillRect(x - ty, y + tx, x, y);
 
 			if (error <= 0)
 			{
-				++diffY;
-				error += ty;
-				ty += 2;
+				ty++;
+				error += 2 * ty + 1;
 			}
-
 			if (error > 0)
 			{
-				--diffX;
-				tx += 2;
-				error += (tx - diameter);
+				tx--;
+				error -= 2 * tx + 1;
 			}
 		}
 	}
