@@ -159,11 +159,11 @@ void Graphics::drawFPS(Clock clock, const SDL_Rect& dstRect)
 			SDL_DestroyTexture(fpsTexture);
 		//load new texture
 		const auto tempFont = font;
-		loadFont("../Game-Library/font.ttf", 12);
+		loadFont("../Game-Library/font.ttf", 20);
 		fpsTexture = loadTTFTexture(std::to_string(clock.fps), { 0,0,0,255 });
 		font = tempFont;
 	}
-	drawImage(dstRect.x, dstRect.y, dstRect.w, dstRect.h, fpsTexture);
+	drawImage(dstRect.x, dstRect.y, dstRect.w, dstRect.h, fpsTexture, false);
 }
 
 SDL_Texture* Graphics::loadTexture(const std::string& path) const
@@ -182,34 +182,47 @@ SDL_Texture* Graphics::loadTexture(const std::string& path) const
 	return newTexture;
 }
 
-void Graphics::drawImage(const int& x, const int& y, const int& w, const int& h, SDL_Texture* texture) const
+void Graphics::drawImage(const int& x, const int& y, const int& w, const int& h, SDL_Texture* texture, const bool& scaling) const
 {
 	//the rect of the place on the screen where the image should be drawn
-	SDL_Rect dstrect = { x + w / 2 - w * camera.zoom / 2, y + h / 2 - h * camera.zoom / 2, w * camera.zoom, h * camera.zoom };
+	SDL_Rect dstrect;
+	if (scaling)
+		dstrect = { int(x + w / 2 - w * camera.zoom / 2), int(y + h / 2 - h * camera.zoom / 2), int(w * camera.zoom), int(h * camera.zoom) };
+	else
+		dstrect = { x, y, w, h };
 	SDL_RenderCopy(renderer, texture, nullptr, &dstrect);
 }
 
-void Graphics::drawImageEx(const int& x, const int& y, const int& w, const int& h, SDL_Texture* texture, const double& angle) const
+void Graphics::drawImageEx(const int& x, const int& y, const int& w, const int& h, SDL_Texture* texture, const double& angle, const bool& scaling) const
 {
 	//the rect of the place on the screen where the image should be drawn
-	SDL_Rect dstrect = { x + w / 2 - w * camera.zoom / 2, y + h / 2 - h * camera.zoom / 2, w * camera.zoom, h * camera.zoom };
-	SDL_RenderCopyEx(renderer, texture, nullptr, &dstrect, angle, nullptr, SDL_FLIP_NONE);
+	SDL_Rect dstrect;
+	if (scaling)
+		dstrect = { int(x + w / 2 - w * camera.zoom / 2), int(y + h / 2 - h * camera.zoom / 2), int(w * camera.zoom), int(h * camera.zoom) };
+	else
+		dstrect = { x, y, w, h };	SDL_RenderCopyEx(renderer, texture, nullptr, &dstrect, angle, nullptr, SDL_FLIP_NONE);
 }
 
-void Graphics::drawPartialImage(const int& textureX, const int& textureY, const int& textureW, const int& textureH, const int& x, const int& y, const int& w, const int& h, SDL_Texture* texture) const
+void Graphics::drawPartialImage(const int& textureX, const int& textureY, const int& textureW, const int& textureH, const int& x, const int& y, const int& w, const int& h, SDL_Texture* texture, const bool& scaling) const
 {
 	//the rect of the place on the screen where the image should be drawn
-	SDL_Rect dstrect = { x + w / 2 - w * camera.zoom / 2, y + h / 2 - h * camera.zoom / 2, w * camera.zoom, h * camera.zoom };
-	//the rect of the place on the texture from which the image should be taken
+	SDL_Rect dstrect;
+	if (scaling)
+		dstrect = { int(x + w / 2 - w * camera.zoom / 2), int(y + h / 2 - h * camera.zoom / 2), int(w * camera.zoom), int(h * camera.zoom) };
+	else
+		dstrect = { x, y, w, h };	//the rect of the place on the texture from which the image should be taken
 	SDL_Rect srcrect = { textureX, textureY, textureW, textureH };
 	SDL_RenderCopy(renderer, texture, &srcrect, &dstrect);
 }
 
-void Graphics::drawPartialImageEx(const int& textureX, const int& textureY, const int& textureW, const int& textureH, const int& x, const int& y, const int& w, const int& h, SDL_Texture* texture, const double& angle) const
+void Graphics::drawPartialImageEx(const int& textureX, const int& textureY, const int& textureW, const int& textureH, const int& x, const int& y, const int& w, const int& h, SDL_Texture* texture, const double& angle, const bool& scaling) const
 {
 	//the rect of the place on the screen where the image should be drawn
-	SDL_Rect dstrect = { x + w / 2 - w * camera.zoom / 2, y + h / 2 - h * camera.zoom / 2, w * camera.zoom, h * camera.zoom };
-	//the rect of the place on the texture from which the image should be taken
+	SDL_Rect dstrect;
+	if (scaling)
+		dstrect = { int(x + w / 2 - w * camera.zoom / 2), int(y + h / 2 - h * camera.zoom / 2), int(w * camera.zoom), int(h * camera.zoom) };
+	else
+		dstrect = { x, y, w, h };	//the rect of the place on the texture from which the image should be taken
 	SDL_Rect srcrect = { textureX, textureY, textureW, textureH };
 	SDL_RenderCopyEx(renderer, texture, &srcrect, &dstrect, angle, nullptr, SDL_FLIP_NONE);
 }

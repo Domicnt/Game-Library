@@ -17,7 +17,7 @@ void Object::draw(const Graphics& graphics)
 	const auto center = graphics.camera.projectPoint(bodyPoint.x, bodyPoint.y);
 	if(currentTexture != -1)
 	{
-		graphics.drawImageEx(1 + center.x - textureWidth / 2, 1 + center.y - textureHeight / 2, textureWidth, textureHeight, textures[currentTexture], body->GetAngle() * 180 / 3.14159);
+		graphics.drawImageEx(1 + center.x - textureWidth / 2, 1 + center.y - textureHeight / 2, textureWidth, textureHeight, textures[currentTexture], body->GetAngle() * 180 / 3.14159, true);
 	}
 	else if (currentAnimation != -1)
 	{
