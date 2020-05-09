@@ -23,7 +23,7 @@ Graphics::Graphics(const int& width, const int& height)
 	g = 255;
 	b = 255;
 
-	loadFont("../Game-Library/font.ttf", 12);
+	loadFont("../Game-Library/font.ttf", 50);
 }
 
 void Graphics::drawLine(const int& x1, const int& y1, const int& x2, const int& y2) const
@@ -147,7 +147,7 @@ void Graphics::drawFPS(Clock clock, const SDL_Rect& dstRect)
 			SDL_DestroyTexture(fpsTexture);
 		//load new texture
 		const auto tempFont = font;
-		loadFont("../Game-Library/font.ttf", 20);
+		loadFont("../Game-Library/font.ttf", 50);
 		fpsTexture = loadTTFTexture(std::to_string(clock.fps), { 0,0,0,255 });
 		font = tempFont;
 	}
