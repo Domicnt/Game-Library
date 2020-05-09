@@ -30,7 +30,7 @@ public:
 	void addCircularFixtureToBody(b2Body* body, float radius, b2Vec2 pos) const;
 
 	//create a revolute joint between two bodies
-	b2Joint* createJoint(b2Body* body1, b2Body* body2);
+	b2Joint* createJoint(b2Body* body1, b2Body* body2, const b2Vec2& localAnchorA, const b2Vec2& localAnchorB) const;
 	
 	//perform one physics step
 	void step();
