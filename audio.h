@@ -6,9 +6,9 @@
 class Audio
 {
 public:
-	//load a music file
+	//load a music file, which can be paused
 	static Mix_Music* loadMusic(const std::string& path);
-	//load a small sound file
+	//load a small sound file, which cannot be paused
 	static Mix_Chunk* loadChunk(const std::string& path);
 	//play a Mix_Music
 	static void playMusic(Mix_Music* music);

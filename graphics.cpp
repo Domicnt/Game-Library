@@ -1,11 +1,14 @@
 #include "graphics.h"
+#include "vcpkg/installed/x86-windows/include/SDL2/SDL_mixer.h"
 
 Graphics::Graphics(const int& width, const int& height)
 {
 	//initialize SDL and libraries
-	SDL_Init(SDL_INIT_VIDEO);
+	SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO);
 	IMG_Init(IMG_INIT_PNG);
 	TTF_Init();
+	Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048);
+	
 	//set image scaling quality
 	SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "1");
 	//create window and renderer
