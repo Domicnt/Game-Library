@@ -19,7 +19,7 @@ SDL_Point Camera::projectPoint(const float& x, const float& y) const
 
 SDL_Point Camera::inverseProjectPoint(SDL_Point point) const
 {
-	return { int((point.x + pos.x) / zoom), int((point.y + pos.y) / zoom) };
+	return { int((point.x + pos.x) / (scaling * zoom)), int((point.y + pos.y) / (scaling * zoom)) };
 }
 
 void Camera::changeZoom(const float& amount)

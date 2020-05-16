@@ -87,7 +87,7 @@ void Physics::addCircularFixtureToBody(b2Body* body, float radius, b2Vec2 pos) c
 
 b2Joint* Physics::createJoint(b2Body* body1, b2Body* body2, const b2Vec2& localAnchorA, const b2Vec2& localAnchorB) const
 {
-	//set up the definition for a xxx joint
+	//set up the definition for a revolute joint joint
 	b2RevoluteJointDef jointDef;
 	jointDef.bodyA = body1;
 	jointDef.bodyB = body2;
