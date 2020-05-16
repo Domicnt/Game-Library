@@ -73,12 +73,8 @@ void Game::basicDraw(Physics& physics, Graphics& graphics)
 	for (auto* joint = physics.world->GetJointList(); joint != nullptr; joint = joint->GetNext()) {
 		if (!graphics.camera.b2BodyVisible(joint->GetBodyA()) && ! graphics.camera.b2BodyVisible(joint->GetBodyB()))
 			continue;
-		const auto angle1 = joint->GetBodyA()->GetAngle();
-		const auto angle2 = joint->GetBodyB()->GetAngle();
-		const auto pos1 = joint->GetBodyA()->GetPosition();
-		const auto pos2 = joint->GetBodyB()->GetPosition();
-		const auto p1 = graphics.camera.projectPoint(cos(angle1) * joint->GetAnchorA().x - sin(angle1) * joint->GetAnchorA().y + pos1.x, sin(angle1) * joint->GetAnchorA().x + cos(angle1) * joint->GetAnchorA().y + pos1.y);
-		const auto p2 = graphics.camera.projectPoint(cos(angle2) * joint->GetAnchorB().x - sin(angle2) * joint->GetAnchorB().y + pos2.x, sin(angle2) * joint->GetAnchorB().x + cos(angle2) * joint->GetAnchorB().y + pos2.y);
+		const auto p1 = graphics.camera.projectPoint(joint->GetAnchorA().x, joint->GetAnchorA().y);
+		const auto p2 = graphics.camera.projectPoint(joint->GetAnchorB().x, joint->GetAnchorB().y);
 		graphics.drawLine(p1.x,p1.y,p2.x,p2.y);
 	}
 }
