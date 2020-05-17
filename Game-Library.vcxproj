@@ -145,6 +145,7 @@
   <ItemGroup>
     <ClInclude Include="animation.h" />
     <ClInclude Include="audio.h" />
+    <ClInclude Include="button.h" />
     <ClInclude Include="camera.h" />
     <ClInclude Include="clock.h" />
     <ClInclude Include="engine.h" />
@@ -152,18 +153,21 @@
     <ClInclude Include="game.h" />
     <ClInclude Include="graphics.h" />
     <ClInclude Include="input.h" />
+    <ClInclude Include="menu.h" />
     <ClInclude Include="object.h" />
     <ClInclude Include="physics.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="animation.cpp" />
     <ClCompile Include="audio.cpp" />
+    <ClCompile Include="button.cpp" />
     <ClCompile Include="camera.cpp" />
     <ClCompile Include="clock.cpp" />
     <ClCompile Include="functions.cpp" />
     <ClCompile Include="game.cpp" />
     <ClCompile Include="graphics.cpp" />
     <ClCompile Include="input.cpp" />
+    <ClCompile Include="menu.cpp" />
     <ClCompile Include="object.cpp" />
     <ClCompile Include="physics.cpp" />
   </ItemGroup>

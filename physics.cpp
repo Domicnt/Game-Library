@@ -22,7 +22,7 @@ b2Body* Physics::createBody(const int& dynamic, const b2Vec2& pos)
 	else 
 		bodyDef.type = b2_staticBody;
 	//set position
-	const b2Vec2 newPos = { pos.x / camera->scaling, pos.y / camera->scaling};
+	const auto newPos = camera->inverseProjectPoint({ int(pos.x), int(pos.y) });
 	bodyDef.position.Set(newPos.x, newPos.y);
 	//create body
 	auto* body = world->CreateBody(&bodyDef);

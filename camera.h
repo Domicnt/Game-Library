@@ -26,7 +26,7 @@ public:
 	//get a point on screen from a point in the world
 	SDL_Point projectPoint(const float& x, const float& y) const;
 	//get a point in the world from a point on screen
-	SDL_Point inverseProjectPoint(SDL_Point point) const;
+	b2Vec2 inverseProjectPoint(SDL_Point point) const;
 
 	//change camera's zoom, and position based on that
 	void changeZoom(const float& amount);
@@ -35,4 +35,7 @@ public:
 	bool visible(SDL_Point point) const;
 	//check if a box2d body, scaled up, might be visible on screen
 	bool b2BodyVisible(b2Body* body) const;
+	//check if a point would be inside a b2Body
+	bool pointInB2Body(b2Vec2 point, b2Body* body) const;
+
 };
