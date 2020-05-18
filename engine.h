@@ -9,5 +9,7 @@
 #include "functions.h"
 #include "game.h"
 #include "object.h"
+#include "button.h"
+#include "menu.h"
 
 #undef main
