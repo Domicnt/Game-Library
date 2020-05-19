@@ -30,7 +30,7 @@ public:
 	void draw(Graphics& graphics, Input& input) const;
 	
 	//import from a file
-	void importFromFile(std::string path);
-	//create and export to a file
-	void exportToFile(std::string path);
+	void importFromFile(Graphics& graphics, Physics& physics, const std::string& path);
+	//export to a file, create it if it doesn't already exist
+	void exportToFile(const std::string& path) const;
 };
