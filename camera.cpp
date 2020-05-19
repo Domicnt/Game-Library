@@ -1,4 +1,5 @@
 #include "camera.h"
+#include "input.h"
 #include "functions.h"
 
 Camera::Camera(const int& W, const int& H, const float& Scaling)
@@ -27,6 +28,22 @@ void Camera::changeZoom(const float& amount)
 	pos.x += w / 2 * amount;
 	pos.y += h / 2 * amount;
 	zoom += amount;
+}
+
+void Camera::freeCam()
+{
+	if (Input::checkKey('-'))
+		changeZoom(-.01f * zoom);
+	if (Input::checkKey('='))
+		changeZoom(.01f * zoom);
+	if (Input::checkKey('w'))
+		pos.y -= 1;
+	if (Input::checkKey('a'))
+		pos.x -= 1;
+	if (Input::checkKey('s'))
+		pos.y += 1;
+	if (Input::checkKey('d'))
+		pos.x += 1;
 }
 
 bool Camera::visible(SDL_Point point) const

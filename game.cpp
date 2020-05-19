@@ -84,7 +84,7 @@ bool Game::updateTime() const
 	return lastUpdate + 1000 / updatesPerSecond <= Clock::checkTime();
 }
 
-void Game::update(Physics& physics, Graphics& graphics)
+void Game::update(Physics& physics, Graphics& graphics, Input& input)
 {
 	//basic outline
 	if (basicGraphics)
@@ -92,8 +92,10 @@ void Game::update(Physics& physics, Graphics& graphics)
 	//draw all objects
 	for (auto& i : objects)
 		i.draw(graphics);
-	//perform one physics step if it is time to do so
+	//perform one physics step, and update input if it is time to do so
 	if (updateTime()) {
+		input.leftClick2 = false;
+		input.rightClick2 = false;
 		lastUpdate = Clock::checkTime();
 		physics.step();
 	}

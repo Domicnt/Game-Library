@@ -9,6 +9,8 @@ public:
 
 	//if mouse was pressed
 	bool leftClick, rightClick;
+	//if mouse was clicked, but reset every physics update instead of every frame
+	bool leftClick2, rightClick2;
 	//if mouse is held
 	bool leftButton, rightButton;
 

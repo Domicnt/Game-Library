@@ -11,5 +11,6 @@
 #include "object.h"
 #include "button.h"
 #include "menu.h"
+#include "editor.h"
 
 #undef main

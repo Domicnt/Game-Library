@@ -148,6 +148,7 @@
     <ClInclude Include="button.h" />
     <ClInclude Include="camera.h" />
     <ClInclude Include="clock.h" />
+    <ClInclude Include="editor.h" />
     <ClInclude Include="engine.h" />
     <ClInclude Include="functions.h" />
     <ClInclude Include="game.h" />
@@ -163,6 +164,7 @@
     <ClCompile Include="button.cpp" />
     <ClCompile Include="camera.cpp" />
     <ClCompile Include="clock.cpp" />
+    <ClCompile Include="editor.cpp" />
     <ClCompile Include="functions.cpp" />
     <ClCompile Include="game.cpp" />
     <ClCompile Include="graphics.cpp" />

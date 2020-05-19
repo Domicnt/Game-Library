@@ -4,6 +4,8 @@ Input::Input()
 {	
 	leftClick = false;
 	rightClick = false;
+	leftClick2 = false;
+	rightClick2 = false;
 	leftButton = false;
 	rightButton = false;
 }
@@ -47,11 +49,13 @@ void Input::update(bool* quit)
 			//left button
 			case SDL_BUTTON_LEFT:
 				leftClick = true;
+				leftClick2 = true;
 				leftButton = true;
 				break;
 			//right button
 			case SDL_BUTTON_RIGHT:
 				rightClick = true;
+				rightClick2 = true;
 				rightButton = true;
 				break;
 			default:
