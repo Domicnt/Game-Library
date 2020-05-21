@@ -18,7 +18,7 @@ Menu::Menu(const int& X, const int& Y, const int& W, const int& H, SDL_Texture* 
 	texture = Texture;
 }
 
-int Menu::update(Input input)
+int Menu::update(Input& input)
 {
 	auto buttonPressed = 0;
 	for (auto i = 0; i < std::size(buttons); i++)
@@ -29,7 +29,7 @@ int Menu::update(Input input)
 	return buttonPressed;
 }
 
-void Menu::draw(Graphics graphics)
+void Menu::draw(Graphics& graphics) const
 {
 	if (texture)
 		graphics.drawImage(x, y, w, h, texture, false);

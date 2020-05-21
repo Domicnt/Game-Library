@@ -20,7 +20,7 @@ public:
 	Menu(const int& X, const int& Y, const int& W, const int& H, SDL_Texture* Texture);
 	
 	//returns which button was pressed, else 0
-	int update(Input input);
+	int update(Input& input);
 	//draws all buttons over background texture
-	void draw(Graphics graphics);
+	void draw(Graphics& graphics) const;
 };

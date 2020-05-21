@@ -3,6 +3,9 @@
 
 Graphics::Graphics(const int& width, const int& height)
 {
+
+	//SDL_SetWindowFullscreen
+	
 	//initialize SDL and libraries
 	SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO);
 	IMG_Init(IMG_INIT_PNG);
