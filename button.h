@@ -18,6 +18,7 @@ public:
 	//constructors
 	Button();
 	Button(const int& X, const int& Y, const int& W, const int& H);
+	Button(const int& X, const int& Y, const int& W, const int& H, Graphics& graphics, std::string str);
 	Button(const int& X, const int& Y, const int& W, const int& H, SDL_Texture* Texture, SDL_Texture* HoverTexture);
 	
 	//returns if the button was pressed

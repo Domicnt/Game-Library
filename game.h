@@ -2,7 +2,6 @@
 
 #include "graphics.h"
 #include "physics.h"
-#include "input.h"
 
 #include "object.h"
 
@@ -37,5 +36,5 @@ public:
 	//checks if it is time for an update
 	bool updateTime() const;
 	//update objects and make a physics step
-	void update(Physics& physics, Graphics& graphics, Input& input);
+	void update(Physics& physics, Graphics& graphics);
 };

@@ -23,6 +23,17 @@ Button::Button(const int& X, const int& Y, const int& W, const int& H)
 	hoverTexture = nullptr;
 }
 
+Button::Button(const int& X, const int& Y, const int& W, const int& H, Graphics& graphics, std::string str)
+{
+	x = X;
+	y = Y;
+	w = W;
+	h = H;
+	hover = false;
+	texture = graphics.loadTTFTexture(str, {0,0,0,255});
+	hoverTexture = texture;
+}
+
 Button::Button(const int& X, const int& Y, const int& W, const int& H, SDL_Texture* Texture, SDL_Texture* HoverTexture)
 {
 	x = X;

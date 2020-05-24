@@ -6,6 +6,7 @@ Input::Input()
 	rightClick = false;
 	leftClick2 = false;
 	rightClick2 = false;
+	resetNext = false;
 	leftButton = false;
 	rightButton = false;
 }
@@ -29,13 +30,21 @@ SDL_Point Input::getPos()
 	return { mX, mY };
 }
 
-void Input::update(bool* quit)
+void Input::update(bool* quit, Game& game)
 {
 	//push up new events
 	SDL_PumpEvents();
 	//reset click variables
 	leftClick = false;
 	rightClick = false;
+	if(resetNext)
+	{
+		leftClick2 = false;
+		rightClick2 = false;
+		resetNext = false;
+	}
+	if (game.updateTime())
+		resetNext = true;
 	//while there are events yet to be processed
 	while (SDL_PollEvent(&e) != 0) {
 		switch (e.type) {

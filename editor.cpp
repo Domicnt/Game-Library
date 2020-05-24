@@ -3,21 +3,21 @@
 #include <fstream>
 #include <iostream>
 
-Editor::Editor()
+Editor::Editor(Graphics& graphics)
 {
 	defined = false;
 	pointsDefined = false;
 	tool = line;
 	//exit button
-	menu.buttons.emplace_back(10, 10, 200, 100);
+	menu.buttons.emplace_back(50, 10, 100, 50, graphics, "Exit Editor");
 	//line tool
-	menu.buttons.emplace_back(10, 110, 200, 100);
+	menu.buttons.emplace_back(200, 10, 100, 50, graphics, "Line Tool");
 	//rectangle tool
-	menu.buttons.emplace_back(10, 210, 200, 100);
+	menu.buttons.emplace_back(350, 10, 100, 50, graphics, "Rectangle Tool");
 	//circle tool
-	menu.buttons.emplace_back(10, 310, 200, 100);
+	menu.buttons.emplace_back(500, 10, 100, 50, graphics, "Circle Tool");
 	//polygon tool
-	menu.buttons.emplace_back(10, 410, 200, 100);
+	menu.buttons.emplace_back(650, 10, 100, 50, graphics, "Polygon Tool");
 }
 
 bool Editor::editBody(Physics& physics, Graphics& graphics, Input& input, b2Body* body)
@@ -66,7 +66,7 @@ bool Editor::editBody(Physics& physics, Graphics& graphics, Input& input, b2Body
 			defined = true;
 			point = position;
 		}
-		else if (input.leftClick2 && defined)
+		else if (input.leftClick2 && defined && position.x != point.x && position.y != point.y)
 		{
 			physics.addFixtureToBody(body, { {point.x * graphics.camera.scaling, point.y * graphics.camera.scaling},{point.x * graphics.camera.scaling, position.y * graphics.camera.scaling},{position.x * graphics.camera.scaling, position.y * graphics.camera.scaling},{position.x * graphics.camera.scaling, point.y * graphics.camera.scaling} });
 			defined = false;
@@ -92,7 +92,17 @@ bool Editor::editBody(Physics& physics, Graphics& graphics, Input& input, b2Body
 		}
 		else if (input.leftClick2 && pointsDefined)
 		{
-			points.emplace_back(position.x, position.y);
+			for(const auto& i : points)
+			{
+				if(i == position)
+				{
+					break;
+				}
+			}
+			if (std::size(points) < 8)
+				points.emplace_back(position.x, position.y);
+			else
+				std::cout << "Maximum of 8 vertices in a polygon" << std::endl;
 		}
 		else if (input.rightClick2 && pointsDefined)
 		{

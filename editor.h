@@ -28,7 +28,7 @@ public:
 	Menu menu;
 
 	//constructor
-	Editor();
+	Editor(Graphics& graphics);
 
 	//edit a body, returns true if finished
 	bool editBody(Physics& physics, Graphics& graphics, Input& input, b2Body* body);
