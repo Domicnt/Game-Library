@@ -22,7 +22,7 @@ Editor::Editor(Graphics& graphics)
 
 bool Editor::editBody(Physics& physics, Graphics& graphics, Input& input, b2Body* body)
 {
-	switch (menu.update(input))
+	switch (menu.update(input, graphics))
 	{
 	case 1:
 		return true;
@@ -42,7 +42,7 @@ bool Editor::editBody(Physics& physics, Graphics& graphics, Input& input, b2Body
 		break;
 	}
 	graphics.camera.freeCam();
-	const b2Vec2 position = graphics.camera.inverseProjectPoint(Input::getPos());
+	const b2Vec2 position = graphics.camera.inverseProjectPoint(Input::getPos(graphics.renderer));
 	switch (tool)
 	{
 	case line:
@@ -92,9 +92,9 @@ bool Editor::editBody(Physics& physics, Graphics& graphics, Input& input, b2Body
 		}
 		else if (input.leftClick2 && pointsDefined)
 		{
-			for(const auto& i : points)
+			for (const auto& i : points)
 			{
-				if(i == position)
+				if (i == position)
 				{
 					break;
 				}
@@ -119,7 +119,7 @@ bool Editor::editBody(Physics& physics, Graphics& graphics, Input& input, b2Body
 
 void Editor::draw(Graphics& graphics, Input& input) const
 {
-	const auto position = Input::getPos();
+	const auto position = Input::getPos(graphics.renderer);
 	switch (tool)
 	{
 	case line:
@@ -163,7 +163,7 @@ void Editor::draw(Graphics& graphics, Input& input) const
 
 void Editor::importFromFile(Graphics& graphics, Physics& physics, const std::string& path, b2Body* body)
 {
-	std::ifstream file(path);
+	std::ifstream file(path.c_str());
 	if (file.is_open())
 	{
 		std::string str;
@@ -220,40 +220,43 @@ void Editor::importFromFile(Graphics& graphics, Physics& physics, const std::str
 
 void Editor::exportToFile(const std::string& path, b2Body* body)
 {
-	std::ofstream file(path);
-	for (auto* f = body->GetFixtureList(); f; f = f->GetNext())
+	std::ofstream file(path.c_str());
+	if (file.is_open())
 	{
-		switch (f->GetShape()->GetType())
+		for (auto* f = body->GetFixtureList(); f; f = f->GetNext())
 		{
-		case b2Shape::e_edge:
-		{
-			const auto edge = (b2EdgeShape*)f->GetShape();
-			//edge is really just a polygon with two vertices
-			file << "polygon" << std::endl << edge->m_vertex1.x << std::endl << edge->m_vertex1.y << std::endl << edge->m_vertex2.x << std::endl << edge->m_vertex2.y << std::endl << std::endl;
-			break;
-		}
-		case b2Shape::e_polygon:
-		{
-			const auto polygon = (b2PolygonShape*)f->GetShape();
-			file << "polygon" << std::endl;
-			auto v = 0;
-			//check if any vertices are undefined
-			for (const auto i : polygon->m_vertices)
-				if (i.x > -INT16_MAX)
-					v++;
-			for (auto i = 0; i < v; i++)
+			switch (f->GetShape()->GetType())
 			{
-				file << polygon->m_vertices[i].x << std::endl << polygon->m_vertices[i].y << std::endl;
+			case b2Shape::e_edge:
+			{
+				const auto edge = (b2EdgeShape*)f->GetShape();
+				//edge is really just a polygon with two vertices
+				file << "polygon" << std::endl << edge->m_vertex1.x << std::endl << edge->m_vertex1.y << std::endl << edge->m_vertex2.x << std::endl << edge->m_vertex2.y << std::endl << std::endl;
+				break;
 			}
-			file << std::endl << std::endl;
-			break;
-		}
-		case b2Shape::e_circle:
-		{
-			const auto circle = (b2CircleShape*)f->GetShape();
-			file << "circle" << std::endl << circle->m_p.x << std::endl << circle->m_p.y << std::endl << circle->m_radius << std::endl << std::endl;
-			break;
-		}
+			case b2Shape::e_polygon:
+			{
+				const auto polygon = (b2PolygonShape*)f->GetShape();
+				file << "polygon" << std::endl;
+				auto v = 0;
+				//check if any vertices are undefined
+				for (const auto i : polygon->m_vertices)
+					if (i.x > -INT16_MAX)
+						v++;
+				for (auto i = 0; i < v; i++)
+				{
+					file << polygon->m_vertices[i].x << std::endl << polygon->m_vertices[i].y << std::endl;
+				}
+				file << std::endl << std::endl;
+				break;
+			}
+			case b2Shape::e_circle:
+			{
+				const auto circle = (b2CircleShape*)f->GetShape();
+				file << "circle" << std::endl << circle->m_p.x << std::endl << circle->m_p.y << std::endl << circle->m_radius << std::endl << std::endl;
+				break;
+			}
+			}
 		}
 	}
 }

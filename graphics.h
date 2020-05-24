@@ -27,7 +27,7 @@ public:
 	SDL_Texture* fpsTexture;
 
 	//constructor, takes desired width and height of window
-	Graphics(const int& width, const int& height);
+	Graphics(const int& width, const int& height, const bool& fullScreen);
 
 	//Functions for rendering geometry:
 	

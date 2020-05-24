@@ -1,11 +1,8 @@
 #include "graphics.h"
 #include "vcpkg/installed/x86-windows/include/SDL2/SDL_mixer.h"
 
-Graphics::Graphics(const int& width, const int& height)
-{
-
-	//SDL_SetWindowFullscreen
-	
+Graphics::Graphics(const int& width, const int& height, const bool& fullScreen)
+{	
 	//initialize SDL and libraries
 	SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO);
 	IMG_Init(IMG_INIT_PNG);
@@ -18,8 +15,12 @@ Graphics::Graphics(const int& width, const int& height)
 	window = SDL_CreateWindow("Game", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, width, height, SDL_WINDOW_SHOWN);
 	renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);// | SDL_RENDERER_PRESENTVSYNC); // v-sync
 
+	if(fullScreen)
+		SDL_SetWindowFullscreen(window, SDL_WINDOW_FULLSCREEN_DESKTOP);
+	SDL_RenderSetLogicalSize(renderer, 960, 540);
+	
 	//Camera
-	camera = { width,height,20 };
+	camera = { 960,540,20 };
 
 	//define draw settings
 	r = 255;

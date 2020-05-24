@@ -22,7 +22,7 @@ public:
 	Button(const int& X, const int& Y, const int& W, const int& H, SDL_Texture* Texture, SDL_Texture* HoverTexture);
 	
 	//returns if the button was pressed
-	bool update(Input input);
+	bool update(Input& input, Graphics& graphics);
 	//draws button, texture if applicable
 	void draw(Graphics graphics) const;
 };

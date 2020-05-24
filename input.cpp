@@ -23,11 +23,13 @@ bool Input::checkKey(char key)
 	return false;
 }
 
-SDL_Point Input::getPos()
+SDL_Point Input::getPos(SDL_Renderer* renderer)
 {
 	int mX, mY;
 	SDL_GetMouseState(&mX, &mY);
-	return { mX, mY };
+	float sX, sY;
+	SDL_RenderGetScale(renderer, &sX, &sY);
+	return { int(mX / sX), int(mY / sY) };
 }
 
 void Input::update(bool* quit, Game& game)

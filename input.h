@@ -22,7 +22,7 @@ public:
 	//check if a specific key is down
 	static bool checkKey(char key);
 	//get mouse position
-	static SDL_Point getPos();
+	static SDL_Point getPos(SDL_Renderer* renderer);
 	//update based on inputs
 	void update(bool* quit, Game& game);
 };

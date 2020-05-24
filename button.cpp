@@ -45,9 +45,9 @@ Button::Button(const int& X, const int& Y, const int& W, const int& H, SDL_Textu
 	hoverTexture = HoverTexture;
 }
 
-bool Button::update(Input input)
+bool Button::update(Input& input, Graphics& graphics)
 {
-	const auto pos = Input::getPos();
+	const auto pos = Input::getPos(graphics.renderer);
 	hover = Functions::rectVsRect(x, y, w, h, pos.x, pos.y, 0, 0);
 	return hover && input.leftButton;
 }

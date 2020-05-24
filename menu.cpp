@@ -18,12 +18,12 @@ Menu::Menu(const int& X, const int& Y, const int& W, const int& H, SDL_Texture* 
 	texture = Texture;
 }
 
-int Menu::update(Input& input)
+int Menu::update(Input& input, Graphics& graphics)
 {
 	auto buttonPressed = 0;
 	for (auto i = 0; i < std::size(buttons); i++)
 	{
-		if (buttons[i].update(input))
+		if (buttons[i].update(input, graphics))
 			buttonPressed = i + 1;
 	}
 	return buttonPressed;
