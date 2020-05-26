@@ -24,6 +24,7 @@ public:
 	//body dimensions
 	float bodyWidth, bodyHeight;
 
+	Object() = default;
 	Object(b2Body* Body);
 
 	//draw texture/animation
