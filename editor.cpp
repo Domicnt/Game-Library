@@ -43,7 +43,7 @@ bool Editor::editBody(Physics& physics, Graphics& graphics, Input& input, b2Body
 	}
 	graphics.camera.freeCam();
 	const auto position = graphics.camera.inverseProjectPoint(Input::getPos(graphics.renderer));
-	const auto bodyPos = body->GetWorldCenter();
+	const auto bodyPos = body->GetWorldPoint({0,0});
 	switch (tool)
 	{
 	case line:
@@ -215,7 +215,7 @@ void Editor::importFromFile(Graphics& graphics, Physics& physics, const std::str
 		}
 		for (auto i : circles)
 		{
-			physics.addCircularFixtureToBody(body, i[0] * graphics.camera.scaling, { i[1] * graphics.camera.scaling, i[2] * graphics.camera.scaling });
+			physics.addCircularFixtureToBody(body, i[2] * graphics.camera.scaling, { i[0] * graphics.camera.scaling, i[1] * graphics.camera.scaling });
 		}
 
 	}
@@ -224,7 +224,7 @@ void Editor::importFromFile(Graphics& graphics, Physics& physics, const std::str
 
 void Editor::exportToFile(const std::string& path, b2Body* body)
 {
-	std::ofstream file(path);
+	std::ofstream file(path, std::ofstream::out | std::ofstream::trunc);
 	for (auto* f = body->GetFixtureList(); f; f = f->GetNext())
 	{
 		switch (f->GetShape()->GetType())
