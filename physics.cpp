@@ -85,7 +85,7 @@ void Physics::addCircularFixtureToBody(b2Body* body, float radius, b2Vec2 pos) c
 	body->CreateFixture(&fixtureDef);
 }
 
-b2Joint* Physics::createJoint(b2Body* body1, b2Body* body2, const b2Vec2& localAnchorA, const b2Vec2& localAnchorB) const
+b2Joint* Physics::createJoint(b2Body* body1, b2Body* body2, const b2Vec2& localAnchorA, const b2Vec2& localAnchorB, const bool& limit, const float& upper, const float& lower) const
 {
 	//set up the definition for a revolute joint joint
 	b2RevoluteJointDef jointDef;
@@ -93,6 +93,9 @@ b2Joint* Physics::createJoint(b2Body* body1, b2Body* body2, const b2Vec2& localA
 	jointDef.bodyB = body2;
 	jointDef.localAnchorA = localAnchorA;
 	jointDef.localAnchorB = localAnchorB;
+	jointDef.enableLimit = limit;
+	jointDef.upperAngle = upper;
+	jointDef.lowerAngle = lower;
 	jointDef.collideConnected = false;
 
 	//create the joint and return it
